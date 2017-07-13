@@ -26,10 +26,20 @@ app.get('/math/calculate', function(request, response) {
   }
 })
 
-app.get('/math/pi', function(request, response){
-  response.send(String(Math.PI))
+app.post('/math/sum', function(request, response){
+  var query = request.query.n
+  var total = 0;
+  var resultString = []
+  for (var i=0; i<=query.length; i++){
+    total+= i
+  }
+  for (var i=1; i<=query.length; i++){
+    resultString.push(i)
+    resultString.push('+')
+  }
+  query = query.join('+')
+  response.send(query + "=" + total);
 })
-
 
 app.listen(8080)
 
