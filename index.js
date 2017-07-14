@@ -3,6 +3,9 @@ var app = express();
 var bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 
 app.get('/math/pi', function(request, response){
   response.send(String(Math.PI))
@@ -61,6 +64,23 @@ app.use('/math/volume', function(request, response){
 
 app.post('/math/area', function(req, response){
   console.log(req.body)
+  var type = req.body.type
+  var width = parseInt(req.body.width)
+  var height = parseInt(req.body.height)
+  var radius = parseInt(req.body.radius)
+  var area = 1;
+  if (type === 'rectangle'){
+    area = width * height
+    var stringAnswer = "Area of a " + width + "x" + height + " rectangle is " + area
+    response.send(stringAnswer)
+  }
+   else if (type === 'circle'){
+    area = Math.PI * Math.pow(radius, 2)
+    var stringAnswer = "Area of a circle with a radius of " + radius + " is " + area
+    response.send(stringAnswer)
+  } else {
+    response.send('Invalid')
+  }
 })
 
 app.listen(8080)
